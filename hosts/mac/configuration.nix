@@ -13,9 +13,8 @@
   nix.settings.experimental-features = "nix-command flakes";
 
   # Create /etc/zshrc that loads the nix-darwin environment.
-  programs.zsh.enable = true;  # default shell on catalina
+  programs.zsh.enable = true; # default shell on catalina
   # programs.fish.enable = true;
-
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
@@ -25,8 +24,8 @@
   nixpkgs.hostPlatform = "x86_64-darwin";
 
   users.users.reed = {
-	  name = "reed";
-	  home = "/Users/reed";
+    name = "reed";
+    home = "/Users/reed";
   };
 
   security.pam.enableSudoTouchIdAuth = true;
