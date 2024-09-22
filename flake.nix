@@ -23,7 +23,7 @@
         REED-PC = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
-            ./configuration.nix
+            ./hosts/wsl/configuration.nix
 
             nixos-wsl.nixosModules.default
             {
@@ -35,7 +35,7 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.reed = import ./home;
+              home-manager.users.reed = import ./hosts/wsl/home.nix;
 
               # Optionally, use home-manager.extraSpecialArgs to pass
               # arguments to home.nix
@@ -56,13 +56,13 @@
               system.configurationRevision = self.rev or self.dirtyRev or null;
             }
 
-            ./hosts/mac/configuration.nix
+            ./hosts/macbook/configuration.nix
 
             home-manager.darwinModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.reed = import ./home;
+              home-manager.users.reed = import ./hosts/macbook/home.nix;
             }
           ];
         };
