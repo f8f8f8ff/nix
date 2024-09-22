@@ -33,6 +33,7 @@
 
             home-manager.nixosModules.home-manager
             {
+              home-manager.backupFileExtension = "hm-backup";
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.reed = import ./hosts/wsl/home.nix;
@@ -60,6 +61,7 @@
 
             home-manager.darwinModules.home-manager
             {
+              home-manager.backupFileExtension = "hm-backup";
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.reed = import ./hosts/macbook/home.nix;
