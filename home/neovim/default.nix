@@ -54,8 +54,9 @@ in
       fd
 
       lua-language-server
-      # nix ls
-      nil
+      nil # nix ls
+      gopls
+      clangd
     ];
 
     extraConfig = ''

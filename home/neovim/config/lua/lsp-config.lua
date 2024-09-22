@@ -41,6 +41,12 @@ end
 -- nix
 default_lsp_setup("nil_ls")
 
+-- go
+default_lsp_setup("gopls")
+
+-- c/c++
+default_lsp_setup("clangd")
+
 -- lua
 local runtime_path = vim.split(package.path, ";")
 table.insert(runtime_path, "lua/?.lua")
