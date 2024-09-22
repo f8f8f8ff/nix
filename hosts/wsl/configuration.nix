@@ -27,4 +27,7 @@
     curl
   ];
   environment.variables.EDITOR = "nvim";
+
+  programs.zsh.enable = true;
+  users.users.reed.shell = pkgs.zsh;
 }
