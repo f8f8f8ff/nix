@@ -56,7 +56,7 @@ in
       lua-language-server
       nil # nix ls
       gopls
-      clangd
+      clang-tools
     ];
 
     extraConfig = ''
