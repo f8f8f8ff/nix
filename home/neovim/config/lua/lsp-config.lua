@@ -94,6 +94,3 @@ vim.diagnostic.config {
     float = { border = "single" }
 }
 
-nvim_lsp.ui.windows.default_options = {
-    border = "single"
-}
