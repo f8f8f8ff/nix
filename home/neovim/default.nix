@@ -16,12 +16,28 @@
 		vim-vinegar
 		# fzf
 		fzf-lua
+
+        # lsp
+        nvim-lspconfig
+
+        # completion
+        nvim-cmp
+        cmp-nvim-lsp
+        cmp-cmdline
+        cmp-buffer
+        cmp-path
+
+        # snippet
+        luasnip
 	];
 
 	extraPackages = with pkgs; [
 		fzf
 		ripgrep
 		fd
+
+        # nix ls
+        nil
 	];
 
 	extraConfig = ''
