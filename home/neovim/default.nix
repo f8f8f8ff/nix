@@ -1,5 +1,16 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
+let
+  fromGitHub = rev: ref: repo: pkgs.vimUtils.buildVimPlugin {
+    pname = "${lib.strings.sanitizeDerivationName repo}";
+    version = ref;
+    src = builtins.fetchGit {
+      url = "https://github.com/${repo}.git";
+      ref = ref;
+      rev = rev;
+    };
+  };
+in
 {
   programs.neovim = {
     enable = true;
@@ -21,7 +32,7 @@
       # git
       vim-fugitive
       # theme
-      papercolor-theme
+      (fromGitHub "9a96579f800d709f0d1d7cc0f0eece9cf13af815" "main" "jaredgorski/Mies.vim")
 
       # lsp
       nvim-lspconfig

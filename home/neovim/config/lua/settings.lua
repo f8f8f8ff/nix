@@ -16,7 +16,7 @@ opt.number = true
 opt.relativenumber = true
 vim.cmd.syntax("on")
 -- opt.termguicolors = true
--- vim.cmd.colorscheme("PaperColor")
+vim.cmd.colorscheme("mies")
 
 -- search
 opt.hlsearch = true
