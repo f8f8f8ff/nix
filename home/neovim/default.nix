@@ -36,6 +36,7 @@
 		ripgrep
 		fd
 
+        lua-language-server
         # nix ls
         nil
 	];
