@@ -13,7 +13,12 @@
   ];
 
   programs = {
-    zsh.enable = true;
+    zsh = {
+      enable = true;
+      initExtra = ''
+        export PS1='%~%% '
+        '';
+    };
     tmux = {
       enable = true;
       mouse = true;
