@@ -28,4 +28,6 @@
 	  name = "reed";
 	  home = "/Users/reed";
   };
+
+  security.pam.enableSudoTouchIdAuth = true;
 }
