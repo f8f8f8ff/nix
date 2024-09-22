@@ -16,6 +16,10 @@
 		vim-vinegar
 		# fzf
 		fzf-lua
+        # detect tab style
+        vim-sleuth
+        # git
+        vim-fugitive
 
         # lsp
         nvim-lspconfig
