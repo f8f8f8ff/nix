@@ -1,10 +1,10 @@
 { config, pkgs, ... }:
 
 {
-  # Home Manager needs a bit of information about you and the paths it should
-  # manage.
-  home.username = "reed";
-  home.homeDirectory = "/home/reed";
+  imports = [
+    ./git.nix
+    ./neovim
+  ];
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -35,12 +35,6 @@
     #   echo "Hello, ${config.home.username}!"
     # '')
   ];
-
-  programs.git = {
-    enable = true;
-    userName = "f8f8f8ff";
-    userEmail = "reedhdonaldson@gmail.com";
-  };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -74,7 +68,7 @@
   #  /etc/profiles/per-user/reed/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    EDITOR = "nvim";
+    # EDITOR = "nvim";
   };
 
   # Let Home Manager install and manage itself.
