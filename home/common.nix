@@ -13,7 +13,13 @@
   ];
 
   programs = {
-    zsh.enable = true;
+    zsh = {
+      enable = true;
+      enableCompletion = true;
+      envExtra = ''
+        PROMPT='%~%% '
+        '';
+    };
     tmux = {
       enable = true;
       mouse = true;
