@@ -3,6 +3,8 @@ local g = vim.g
 
 g.mapleader = " "
 
+opt.clipboard="unnamedplus"
+
 -- indentation
 opt.smartindent = true
 opt.tabstop = 4
