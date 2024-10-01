@@ -1,4 +1,5 @@
 require("settings")
+require("remap")
 require("fzf-config")
 require("lsp-config")
 require("cmp-config")
