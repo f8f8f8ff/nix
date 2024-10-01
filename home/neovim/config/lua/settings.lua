@@ -3,7 +3,7 @@ local g = vim.g
 
 g.mapleader = " "
 
-opt.clipboard="unnamedplus"
+opt.clipboard = "unnamedplus"
 
 -- indentation
 opt.smartindent = true
@@ -19,6 +19,7 @@ opt.relativenumber = true
 vim.cmd.syntax("on")
 -- opt.termguicolors = true
 vim.cmd.colorscheme("mies")
+opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,a:blinkon10"
 
 -- search
 opt.hlsearch = true

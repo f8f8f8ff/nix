@@ -27,6 +27,7 @@ in
       vim-vinegar
       # fzf
       fzf-lua
+      vim-peekaboo
       # detect tab style
       vim-sleuth
       # git
