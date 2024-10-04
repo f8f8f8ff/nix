@@ -18,7 +18,15 @@
       nix-darwin,
       ...
     }:
+    let
+      forAllSystems = nixpkgs.lib.attrsets.genAttrs [
+        "x86_64-linux"
+        "x86_64-darwin"
+      ];
+    in
     {
+      formatter = forAllSystems (system: nixpkgs.legacyPackages."${system}".nixfmt-rfc-style);
+
       nixosConfigurations = {
         REED-PC = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";

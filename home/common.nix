@@ -17,7 +17,7 @@
       enable = true;
       initExtra = ''
         export PS1='%~%% '
-        '';
+      '';
     };
     tmux = {
       enable = true;
@@ -34,7 +34,7 @@
         bind-key c new-window -c "#{pane_current_path}"
         bind-key % split-window -h -c "#{pane_current_path}"
         bind-key '"' split-window -v -c "#{pane_current_path}"
-        '';
+      '';
     };
     direnv = {
       enable = true;
