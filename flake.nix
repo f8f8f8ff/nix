@@ -51,6 +51,21 @@
             }
           ];
         };
+
+        "t470" = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./hosts/t470/configuration.nix
+
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.backupFileExtension = "hm-backup";
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.reed = import ./hosts/t470/home.nix;
+            }
+          ];
+        };
       };
 
       darwinConfigurations = {
