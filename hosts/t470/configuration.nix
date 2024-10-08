@@ -84,6 +84,9 @@
     git
     neovim
     qemu
+
+    gh
+    at
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -123,6 +126,8 @@
     AllowHybridSleep=no
     AllowSuspendThenHibernate=no
   '';
+
+  services.cron.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
