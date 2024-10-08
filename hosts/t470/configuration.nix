@@ -8,6 +8,7 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    # ./ad-blocker.nix
   ];
 
   # Bootloader.
@@ -29,7 +30,10 @@
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    wifi.powersave = false;
+  };
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
@@ -79,6 +83,7 @@
     #  wget
     git
     neovim
+    qemu
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -97,7 +102,13 @@
   services.tailscale.enable = true;
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 22 ];
+  networking.firewall.allowedTCPPorts = [
+    22
+    # plan9
+    17010
+    17013
+    567
+  ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
