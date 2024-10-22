@@ -7,6 +7,7 @@
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix.url = "github:Mic92/sops-nix";
   };
 
   outputs =
@@ -16,6 +17,7 @@
       nixos-wsl,
       home-manager,
       nix-darwin,
+      sops-nix,
       ...
     }:
     let
@@ -56,7 +58,7 @@
           system = "x86_64-linux";
           modules = [
             ./hosts/t470/configuration.nix
-
+            sops-nix.nixosModules.sops
             home-manager.nixosModules.home-manager
             {
               home-manager.backupFileExtension = "hm-backup";

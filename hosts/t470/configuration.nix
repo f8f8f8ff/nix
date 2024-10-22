@@ -11,6 +11,10 @@
     # ./ad-blocker.nix
   ];
 
+  sops.defaultSopsFile = ../../secrets/secrets.yaml;
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  sops.secrets."restic/password" = {};
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -72,6 +76,7 @@
     extraGroups = [
       "networkmanager"
       "wheel"
+      "restic"
     ];
     packages = with pkgs; [ ];
   };
@@ -94,6 +99,26 @@
     at
     restic
   ];
+
+  services.restic.server = {
+    enable = true;
+    dataDir = "/data/backup";
+    extraFlags = ["--no-auth"];
+  };
+  users.users.restic.extraGroups = [ "data" ];
+
+  services.restic.backups.daily = {
+    repository = "rest:http://t470/t470";
+    passwordFile = "/run/secrets/restic/password";
+    inhibitsSleep = true;
+    paths = [ "/home/reed" ];
+    exclude = ["/tmp" "/var/cache"];
+    timerConfig = {
+      OnCalendar = "01:00";
+      RandomizedDelaySec = "4h";
+      Persistent = true;
+    };
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
