@@ -90,10 +90,8 @@
     git
     neovim
     qemu
-
     gh
     at
-
     restic
   ];
 
@@ -124,8 +122,22 @@
   # Or disable the firewall altogether.
   networking.firewall.enable = false;
 
+  systemd.services.plan9 = {
+    enable = true;
+    description = "9front file+auth+cpu";
+    after = ["network.target"];
+    wantedBy = ["multi-user.target"];
+    path = [pkgs.qemu];
+    serviceConfig = {
+      WorkingDirectory="/home/reed/9front-vm";
+      ExecStart = "/home/reed/9front-vm/run.sh";
+      Restart = "on-failure";
+      RestartSec = 1;
+    };
+  };
+
   # automatic login
-  services.getty.autologinUser = "reed";
+  # services.getty.autologinUser = "reed";
 
   # no sleep
   systemd.sleep.extraConfig = ''
