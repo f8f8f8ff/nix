@@ -59,6 +59,12 @@
     variant = "";
   };
 
+  # make sure /srv/data exists
+  systemd.tmpfiles.rules = [
+    "d /data 0770 root data -"
+  ];
+
+  users.groups.data.members = [ "reed" ];
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.reed = {
     isNormalUser = true;
@@ -87,6 +93,8 @@
 
     gh
     at
+
+    restic
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -105,16 +113,16 @@
   services.tailscale.enable = true;
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [
-    22
-    # plan9
-    17010
-    17013
-    567
-  ];
+  # networking.firewall.allowedTCPPorts = [
+  #   22
+  #   # plan9
+  #   17010
+  #   17013
+  #   567
+  # ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.enable = false;
 
   # automatic login
   services.getty.autologinUser = "reed";
@@ -127,7 +135,7 @@
     AllowSuspendThenHibernate=no
   '';
 
-  services.cron.enable = true;
+  services.atd.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
