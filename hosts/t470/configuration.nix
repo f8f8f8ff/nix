@@ -26,6 +26,14 @@
   #   useOSProber = true;
   # };
 
+
+  boot.supportedFilesystems = [ "zfs" ];
+  boot.zfs.forceImportRoot = false;
+  networking.hostId = "b6b8d3e8";
+  boot.zfs.extraPools = [ "tank" ];
+  boot.zfs.devNodes = "/dev/disk/by-id";
+  services.zfs.autoScrub.enable = true;
+
   networking.hostName = "t470"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -65,8 +73,45 @@
 
   # make sure /srv/data exists
   systemd.tmpfiles.rules = [
-    "d /data 0770 root data -"
+    "d /mount/external 0770 root data -"
+    "d /srv/backup 0770 restic restic -"
+
+    "d /srv/data 0770 root data -"
+    "d /srv/data/archive 0770 root data -"
+    "d /srv/data/doc 0770 root data -"
+    "d /srv/data/lib 0770 root data -"
+    "d /srv/data/software 0770 root data -"
   ];
+
+  services.samba = {
+    enable = true;
+    openFirewall = true;
+    settings = {
+      global = {
+        security = "user";
+        "workgroup" = "WORKGROUP";
+        "server string" = "t470";
+        "netbios name" = "t470";
+        "hosts allow" = "100. 192.168.1. 127.0.0.1 localhost";
+        "hosts deny" = "0.0.0.0/0";
+        "guest account" = "nobody";
+        "map to guest" = "bad user";
+      };
+      "data" = {
+        "path" = "/srv/data";
+        "browseable" = "yes";
+        "read only" = "no";
+        "guest ok" = "no";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+      };
+    };
+  };
+
+  services.samba-wsdd = {
+    enable = true;
+    openFirewall = true;
+  };
 
   users.groups.data.members = [ "reed" ];
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -102,13 +147,13 @@
 
   services.restic.server = {
     enable = true;
-    dataDir = "/data/backup";
+    dataDir = "/srv/backup";
     extraFlags = ["--no-auth"];
   };
   users.users.restic.extraGroups = [ "data" ];
 
   services.restic.backups.daily = {
-    repository = "rest:http://t470/t470";
+    repository = "rest:http://t470:8000/t470";
     passwordFile = "/run/secrets/restic/password";
     inhibitsSleep = true;
     paths = [ "/home/reed" ];

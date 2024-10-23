@@ -24,7 +24,7 @@
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
-  fileSystems."/data" =
+  fileSystems."/mount/external" =
     { device = "/dev/disk/by-uuid/2A27-52BF";
       fsType = "exfat";
       options = [ "umask=0007" "gid=994" "uid=1000" ];
