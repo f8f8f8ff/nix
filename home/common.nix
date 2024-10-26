@@ -42,6 +42,14 @@
       enableBashIntegration = true;
       nix-direnv.enable = true;
     };
+    btop = {
+      enable = true;
+      settings = {
+        theme_background = false;
+        truecolor = false;
+        vim_keys = true;
+      };
+    };
   };
 
   home.stateVersion = "24.05"; # Please read the comment before changing.

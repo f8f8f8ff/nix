@@ -9,11 +9,11 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     # ./ad-blocker.nix
+    ./zfs.nix
+    ./restic.nix
+    ./samba.nix
+    ./plan9.nix
   ];
-
-  sops.defaultSopsFile = ../../secrets/secrets.yaml;
-  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-  sops.secrets."restic/password" = {};
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -25,14 +25,6 @@
   #   efiSupport = true;
   #   useOSProber = true;
   # };
-
-
-  boot.supportedFilesystems = [ "zfs" ];
-  boot.zfs.forceImportRoot = false;
-  networking.hostId = "b6b8d3e8";
-  boot.zfs.extraPools = [ "tank" ];
-  boot.zfs.devNodes = "/dev/disk/by-id";
-  services.zfs.autoScrub.enable = true;
 
   networking.hostName = "t470"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -71,49 +63,16 @@
     variant = "";
   };
 
-  # make sure /srv/data exists
+  sops.defaultSopsFile = ../../secrets/secrets.yaml;
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+
+
+  # external hdd
   systemd.tmpfiles.rules = [
     "d /mount/external 0770 root data -"
-    "d /srv/backup 0770 restic restic -"
-
-    "d /srv/data 0770 root data -"
-    "d /srv/data/archive 0770 root data -"
-    "d /srv/data/doc 0770 root data -"
-    "d /srv/data/lib 0770 root data -"
-    "d /srv/data/software 0770 root data -"
   ];
 
-  services.samba = {
-    enable = true;
-    openFirewall = true;
-    settings = {
-      global = {
-        security = "user";
-        "workgroup" = "WORKGROUP";
-        "server string" = "t470";
-        "netbios name" = "t470";
-        "hosts allow" = "100. 192.168.1. 127.0.0.1 localhost";
-        "hosts deny" = "0.0.0.0/0";
-        "guest account" = "nobody";
-        "map to guest" = "bad user";
-      };
-      "data" = {
-        "path" = "/srv/data";
-        "browseable" = "yes";
-        "read only" = "no";
-        "guest ok" = "no";
-        "create mask" = "0644";
-        "directory mask" = "0755";
-      };
-    };
-  };
 
-  services.samba-wsdd = {
-    enable = true;
-    openFirewall = true;
-  };
-
-  users.groups.data.members = [ "reed" ];
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.reed = {
     isNormalUser = true;
@@ -123,14 +82,7 @@
       "wheel"
       "restic"
     ];
-    packages = with pkgs; [ ];
   };
-
-  # enable flakes
-  nix.settings.experimental-features = [
-    "flakes"
-    "nix-command"
-  ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -145,25 +97,8 @@
     restic
   ];
 
-  services.restic.server = {
-    enable = true;
-    dataDir = "/srv/backup";
-    extraFlags = ["--no-auth"];
-  };
-  users.users.restic.extraGroups = [ "data" ];
-
-  services.restic.backups.daily = {
-    repository = "rest:http://t470:8000/t470";
-    passwordFile = "/run/secrets/restic/password";
-    inhibitsSleep = true;
-    paths = [ "/home/reed" ];
-    exclude = ["/tmp" "/var/cache"];
-    timerConfig = {
-      OnCalendar = "01:00";
-      RandomizedDelaySec = "4h";
-      Persistent = true;
-    };
-  };
+  programs.neovim.enable = true;
+  programs.neovim.defaultEditor = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -188,26 +123,14 @@
   #   17013
   #   567
   # ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  # networking.firewall.alowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   networking.firewall.enable = false;
 
-  systemd.services.plan9 = {
+  services.plan9 = {
     enable = true;
-    description = "9front file+auth+cpu";
-    after = ["network.target"];
-    wantedBy = ["multi-user.target"];
-    path = [pkgs.qemu];
-    serviceConfig = {
-      WorkingDirectory="/home/reed/9front-vm";
-      ExecStart = "/home/reed/9front-vm/run.sh";
-      Restart = "on-failure";
-      RestartSec = 1;
-    };
+    openFirewall = true;
   };
-
-  # automatic login
-  # services.getty.autologinUser = "reed";
 
   # no sleep
   systemd.sleep.extraConfig = ''
@@ -217,7 +140,10 @@
     AllowSuspendThenHibernate=no
   '';
 
-  services.atd.enable = true;
+  nix.settings.experimental-features = [
+    "flakes"
+    "nix-command"
+  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
