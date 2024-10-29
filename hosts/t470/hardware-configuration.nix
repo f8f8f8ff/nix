@@ -24,12 +24,12 @@
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
-  fileSystems."/mount/external" =
-    { device = "/dev/disk/by-uuid/2A27-52BF";
-      fsType = "exfat";
-      options = [ "umask=0007" "gid=994" "uid=1000" ];
-      noCheck = true;
-    };
+  # fileSystems."/mount/external" =
+  #   { device = "/dev/disk/by-uuid/2A27-52BF";
+  #     fsType = "exfat";
+  #     options = [ "umask=0007" "gid=994" "uid=1000" ];
+  #     noCheck = true;
+  #   };
 
   swapDevices =
     [ { device = "/dev/disk/by-uuid/80eda3ba-a23a-4363-8776-facd9333d08c"; }

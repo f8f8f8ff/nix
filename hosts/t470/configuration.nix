@@ -9,9 +9,9 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     # ./ad-blocker.nix
-    ./zfs.nix
-    ./restic.nix
-    ./samba.nix
+    # ./zfs.nix
+    # ./restic.nix
+    # ./samba.nix
     ./plan9.nix
   ];
 
@@ -25,6 +25,8 @@
   #   efiSupport = true;
   #   useOSProber = true;
   # };
+
+  boot.kernelParams = [ "usbcore.autosuspend=-1" ];
 
   networking.hostName = "t470"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
