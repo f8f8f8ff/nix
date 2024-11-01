@@ -2,6 +2,7 @@ keys:
   - &t470 age12pydm6u896tacezn84kvlz9sugwrqdptua0qxd4vkrv50gtzqd9shdgfzx
   - &pub_t470 age143su32y0xfp5peq98f57pv9v9qup67ugd2pyse4mcneh2ah6pszqv8gqug
   - &macbook age1slhdu0svdar7am5z3j7ywd9w64uay9uruqgxhgu7lzr3rerg6vjs67xnlv
+  - &server_cabinet age1qugmaqhcvhxcx3d3awnspyxqmy6wysgv0vh0lm0xfy4xjnexufdsyqv40y
 creation_rules:
   - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
     key_groups:
@@ -9,4 +10,5 @@ creation_rules:
       - *t470
       - *pub_t470
       - *macbook
+      - *server_cabinet
 
