@@ -11,6 +11,7 @@
       ./zfs.nix
       ./restic.nix
       ./plan9.nix
+      ./samba.nix
     ];
 
   # Bootloader.
@@ -81,7 +82,10 @@
 
   # List services that you want to enable:
 
-  services.plan9.enable = true;
+  services.plan9 = {
+    enable = true;
+    openFirewall = true;
+  };
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
@@ -91,7 +95,7 @@
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.enable = false;
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
 

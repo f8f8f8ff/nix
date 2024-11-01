@@ -26,7 +26,7 @@ in {
       wantedBy = ["multi-user.target"];
       path = [pkgs.qemu];
       serviceConfig = {
-        ExecStart = "${pkgs.qemu}/bin/qemu-system-x86_64 -nic user,hostfwd=tcp::17019-:17019,hostfwd=tcp::567-:567,hostfwd=tcp::17020-:17020,hostfwd=tcp::564-:564,hostfwd=tcp::5356-:535 -enable-kvm -m 2G -smp 2 -drive file=${cfg.image},media=disk,if=virtio,index=0 -nographic";
+        ExecStart = "${pkgs.qemu}/bin/qemu-system-x86_64 -nic user,hostfwd=tcp::17019-:17019,hostfwd=tcp::567-:567,hostfwd=tcp::17020-:17020,hostfwd=tcp::564-:564,hostfwd=tcp::5356-:5356 -enable-kvm -m 2G -smp 2 -drive file=${cfg.image},media=disk,if=virtio,index=0 -nographic";
         Restart = "on-failure";
         RestartSec = 1;
       };
