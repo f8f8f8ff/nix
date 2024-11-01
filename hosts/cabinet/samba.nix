@@ -5,7 +5,7 @@
     openFirewall = true;
     settings = {
       global = {
-        security = "user";
+        "security" = "user";
         "workgroup" = "WORKGROUP";
         "server string" = "cabinet";
         "netbios name" = "cabinet";
@@ -29,6 +29,7 @@
         "readdir_attr:appl_max_access" = "no";
       };
       "data" = {
+        "username" = "reed";
         "path" = "/srv/data";
         "browseable" = "yes";
         "read only" = "no";
