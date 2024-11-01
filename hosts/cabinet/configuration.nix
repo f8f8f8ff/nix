@@ -10,6 +10,7 @@
       ./hardware-configuration.nix
       ./zfs.nix
       ./restic.nix
+      ./plan9.nix
     ];
 
   # Bootloader.
@@ -22,6 +23,10 @@
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+
+  sops.defaultSopsFile = ../../secrets/secrets.yaml;
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -75,6 +80,8 @@
   # };
 
   # List services that you want to enable:
+
+  services.plan9.enable = true;
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;

@@ -10,10 +10,10 @@
 
   sops.secrets."restic/password" = {};
   services.restic.backups.daily = {
-    repository = "rest:http://t470:8000/cabinet";
+    repository = "rest:http://cabinet:8000/cabinet";
     passwordFile = "/run/secrets/restic/password";
     inhibitsSleep = true;
-    paths = [ "/home/reed" ];
+    paths = [ "/home/reed" "/srv/9" ];
     exclude = ["/tmp" "/var/cache"];
     timerConfig = {
       OnCalendar = "01:00";
