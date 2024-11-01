@@ -71,7 +71,7 @@
       };
 
       darwinConfigurations = {
-        "reeds-MacBook-Pro" = nix-darwin.lib.darwinSystem {
+        "rdmbp" = nix-darwin.lib.darwinSystem {
           system = "x86_64-darwin";
           specialArgs = {
             inherit inputs;

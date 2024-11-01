@@ -44,6 +44,7 @@ in
 
       # lsp
       nvim-lspconfig
+      vim-go
 
       # completion
       nvim-cmp
@@ -65,6 +66,7 @@ in
       nil # nix ls
       gopls
       clang-tools
+      delve # go debugger
     ];
 
     extraConfig = ''

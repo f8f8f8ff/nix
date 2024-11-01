@@ -14,4 +14,9 @@
       enable = true;
     };
   };
+
+  home.sessionPath = [
+    "/usr/local/go/bin"
+    "/Users/reed/.local/bin"
+  ];
 }
