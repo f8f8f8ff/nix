@@ -17,6 +17,7 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.extraModprobeConfig = "options kvm min_timer_period_us=10";
 
   networking.hostName = "cabinet"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -28,6 +29,8 @@
   sops.defaultSopsFile = ../../secrets/secrets.yaml;
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
+  powerManagement.cpuFreqGovernor = "powersave";
+  services.thermald.enable = true;
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -87,9 +90,12 @@
     openFirewall = true;
   };
 
+  programs.ssh.package = pkgs.openssh_hpn;
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-  services.openssh.settings.PasswordAuthentication = true;
+  services.openssh = {
+    enable = true;
+    settings.PasswordAuthentication = true;
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

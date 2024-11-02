@@ -14,6 +14,12 @@
         "guest account" = "nobody";
         "map to guest" = "bad user";
 
+        "deadtime" = "30";
+        "getwd cache" = "yes";
+        "min receivefile size" = "16384";
+        "use sendfile" = "yes";
+        "socket options" = "IPTOS_LOWDELAY TCP_NODELAY IPTOS_THROUGHPUT SO_RCVBUF=131072 SO_SNDBUF=131072";
+
         "min protocol" = "SMB2";
         "ea support" = "yes";
         "vfs objects" = "catia fruit streams_xattr crossrename recycle";
@@ -29,14 +35,13 @@
         "readdir_attr:appl_max_access" = "no";
       };
       "data" = {
-        "username" = "reed";
+        "valid users" = "reed";
         "path" = "/srv/data";
         "browseable" = "yes";
         "read only" = "no";
         "guest ok" = "no";
-        "create mask" = "0644";
-        "directory mask" = "0755";
-
+        "create mask" = "0660";
+        "directory mask" = "2770";
         "crossrename:sizelimit" = "5000";
         "recycle:keeptree" = "yes";
         "recycle:versions" = "yes";
