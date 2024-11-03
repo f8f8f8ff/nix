@@ -25,89 +25,97 @@
         "x86_64-linux"
         "x86_64-darwin"
       ];
+
+      commonModules =
+        { user, host }:
+        with inputs;
+        [
+          (./. + "/hosts/${host}/configuration.nix")
+          {
+            home-manager = {
+              backupFileExtension = "hm-backup";
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.${user} = import (./. + "/hosts/${host}/home.nix");
+            };
+            system.configurationRevision = self.rev or self.dirtyRev or null;
+          }
+        ];
+      darwinModules =
+        { user, host }:
+        with inputs;
+        commonModules { inherit user host; }
+        ++ [
+          home-manager.darwinModules.home-manager
+          {
+            users.users.${user}.home = "/Users/${user}";
+          }
+        ];
+      nixosModules =
+        { user, host }:
+        with inputs;
+        commonModules { inherit user host; }
+        ++ [
+          home-manager.nixosModules.home-manager
+        ];
+      wslModules =
+        { user, host }:
+        with inputs;
+        nixosModules { inherit user host; }
+        ++ [
+          nixos-wsl.nixosModules.default
+          {
+            wsl.enable = true;
+          }
+        ];
     in
     {
       formatter = forAllSystems (system: nixpkgs.legacyPackages."${system}".nixfmt-rfc-style);
 
-      nixosConfigurations = {
-        REED-PC = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            ./hosts/wsl/configuration.nix
-
-            nixos-wsl.nixosModules.default
-            {
-              system.stateVersion = "24.05";
-              wsl.enable = true;
-            }
-
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.backupFileExtension = "hm-backup";
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.reed = import ./hosts/wsl/home.nix;
-
-              # Optionally, use home-manager.extraSpecialArgs to pass
-              # arguments to home.nix
-            }
-          ];
-        };
-
-        "t470" = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            ./hosts/t470/configuration.nix
-            sops-nix.nixosModules.sops
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.backupFileExtension = "hm-backup";
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.reed = import ./hosts/t470/home.nix;
-            }
-          ];
-        };
-
-        "cabinet" = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            ./hosts/cabinet/configuration.nix
-            sops-nix.nixosModules.sops
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.backupFileExtension = "hm-backup";
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.reed = import ./hosts/cabinet/home.nix;
-            }
-          ];
-        };
-      };
-
       darwinConfigurations = {
-        "rdmbp" = nix-darwin.lib.darwinSystem {
+        rdmbp = nix-darwin.lib.darwinSystem {
           system = "x86_64-darwin";
+          modules = darwinModules {
+            user = "reed";
+            host = "macbook";
+          };
           specialArgs = {
             inherit inputs;
           };
-          modules = [
-            (./overlays)
-            # Set Git commit hash for darwin-version.
-            {
-              system.configurationRevision = self.rev or self.dirtyRev or null;
-            }
+        };
+      };
 
-            ./hosts/macbook/configuration.nix
-
-            home-manager.darwinModules.home-manager
-            {
-              home-manager.backupFileExtension = "hm-backup";
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.reed = import ./hosts/macbook/home.nix;
+      nixosConfigurations = {
+        cabinet = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules =
+            nixosModules {
+              user = "reed";
+              host = "cabinet";
             }
-          ];
+            ++ [ sops-nix.nixosModules.sops ];
+        };
+
+        t470 = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules =
+            nixosModules {
+              user = "reed";
+              host = "t470";
+            }
+            ++ [ sops-nix.nixosModules.sops ];
+        };
+
+        REED-PC = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules =
+            wslModules {
+              user = "reed";
+              host = "wsl";
+            }
+            ++ [
+              { system.stateVersion = "24.05"; }
+            ];
         };
       };
     };
