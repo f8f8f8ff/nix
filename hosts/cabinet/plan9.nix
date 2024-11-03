@@ -1,8 +1,14 @@
-{config, lib, pkgs, ...}:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 let
   cfg = config.services.plan9;
-in {
+in
+{
   options.services.plan9 = {
     enable = mkEnableOption "9front file+auth+cpu";
 
@@ -18,13 +24,13 @@ in {
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = [pkgs.qemu];
+    environment.systemPackages = [ pkgs.qemu ];
     systemd.services.plan9 = {
       enable = true;
       description = "9front file+auth+cpu";
-      after = ["network.target"];
-      wantedBy = ["multi-user.target"];
-      path = [pkgs.qemu];
+      after = [ "network.target" ];
+      wantedBy = [ "multi-user.target" ];
+      path = [ pkgs.qemu ];
       serviceConfig = {
         ExecStart = "${pkgs.qemu}/bin/qemu-system-x86_64 -nic user,hostfwd=tcp::17019-:17019,hostfwd=tcp::567-:567,hostfwd=tcp::17020-:17020,hostfwd=tcp::564-:564,hostfwd=tcp::5356-:5356 -enable-kvm -m 2G -smp 2 -drive file=${cfg.image},media=disk,if=virtio,index=0 -nographic";
         Restart = "on-failure";

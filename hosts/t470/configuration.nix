@@ -68,12 +68,10 @@
   sops.defaultSopsFile = ../../secrets/secrets.yaml;
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
-
   # external hdd
   systemd.tmpfiles.rules = [
     "d /mount/external 0770 root data -"
   ];
-
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.reed = {

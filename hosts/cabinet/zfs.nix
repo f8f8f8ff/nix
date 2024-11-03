@@ -1,4 +1,4 @@
-{config, pkgs, ...}:
+{ config, pkgs, ... }:
 {
   networking.hostId = "1eca4176";
   boot.supportedFilesystems = [ "zfs" ];
@@ -22,45 +22,45 @@
     "d /srv/data/doc 0770 root data -"
   ];
 
-  fileSystems."/srv/restic" =
-      { device = "tank/ds0/backup/restic";
-        fsType = "zfs";
-        options = ["nofail"];
-      };
+  fileSystems."/srv/restic" = {
+    device = "tank/ds0/backup/restic";
+    fsType = "zfs";
+    options = [ "nofail" ];
+  };
 
-    fileSystems."/srv/data/backup" =
-      { device = "tank/ds0/backup";
-        fsType = "zfs";
-        options = ["nofail"];
-      };
+  fileSystems."/srv/data/backup" = {
+    device = "tank/ds0/backup";
+    fsType = "zfs";
+    options = [ "nofail" ];
+  };
 
-    fileSystems."/srv/data/archive" =
-      { device = "tank/ds0/archive";
-        fsType = "zfs";
-        options = ["nofail"];
-      };
+  fileSystems."/srv/data/archive" = {
+    device = "tank/ds0/archive";
+    fsType = "zfs";
+    options = [ "nofail" ];
+  };
 
-    fileSystems."/srv/data/doc" =
-      { device = "tank/ds0/doc";
-        fsType = "zfs";
-        options = ["nofail"];
-      };
+  fileSystems."/srv/data/doc" = {
+    device = "tank/ds0/doc";
+    fsType = "zfs";
+    options = [ "nofail" ];
+  };
 
-    fileSystems."/srv/data/lib" =
-      { device = "tank/ds0/lib";
-        fsType = "zfs";
-        options = ["nofail"];
-      };
+  fileSystems."/srv/data/lib" = {
+    device = "tank/ds0/lib";
+    fsType = "zfs";
+    options = [ "nofail" ];
+  };
 
-    fileSystems."/srv/data/media" =
-      { device = "tank/ds0/media";
-        fsType = "zfs";
-        options = ["nofail"];
-      };
+  fileSystems."/srv/data/media" = {
+    device = "tank/ds0/media";
+    fsType = "zfs";
+    options = [ "nofail" ];
+  };
 
-    fileSystems."/srv/data/software" =
-      { device = "tank/ds0/software";
-        fsType = "zfs";
-        options = ["nofail"];
-      };
+  fileSystems."/srv/data/software" = {
+    device = "tank/ds0/software";
+    fsType = "zfs";
+    options = [ "nofail" ];
+  };
 }
