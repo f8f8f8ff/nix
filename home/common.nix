@@ -10,6 +10,7 @@
     rclone
     sshfs
     fzf
+    (callPackage ../pkgs/discordsend.nix {})
   ];
 
   programs = {
