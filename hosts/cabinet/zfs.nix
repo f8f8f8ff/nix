@@ -79,4 +79,6 @@
       recursive = true;
     };
   };
+
+  environment.systemPackages = [ pkgs.sanoid ];
 }
