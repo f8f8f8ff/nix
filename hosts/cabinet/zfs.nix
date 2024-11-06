@@ -63,4 +63,20 @@
     fsType = "zfs";
     options = [ "nofail" ];
   };
+
+  services.sanoid = {
+    enable = true;
+    templates.backup = {
+      hourly = 36;
+      daily = 30;
+      monthly = 3;
+      autoprune = true;
+      autosnap = true;
+    };
+
+    datasets."tank/ds0" = {
+      useTemplate = [ "backup" ];
+      recursive = true;
+    };
+  };
 }
