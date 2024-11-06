@@ -1,7 +1,7 @@
 { fetchFromGitHub , buildGoModule }:
 
 let
-  version = "2b3cd1b";
+  version = "87dc679";
 in
 buildGoModule {
   pname = "discordsend";
