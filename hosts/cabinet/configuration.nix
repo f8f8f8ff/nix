@@ -14,6 +14,10 @@
     ./samba.nix
   ];
 
+  sops.secrets."discord/webhook" = {
+    owner = config.users.users.reed.name;
+  };
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
