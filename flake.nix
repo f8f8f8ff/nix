@@ -39,6 +39,7 @@
               users.${user} = import (./. + "/hosts/${host}/home.nix");
             };
             system.configurationRevision = self.rev or self.dirtyRev or null;
+            nixpkgs.overlays = [ (import ./overlays) ];
           }
         ];
       darwinModules =
