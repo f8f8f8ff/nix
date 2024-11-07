@@ -74,6 +74,16 @@
     ];
     packages = with pkgs; [ ];
   };
+  users.groups.reed.members = [ "reed" ];
+
+  users.users.keyan = {
+    isNormalUser = true;
+    description = "keyan";
+    extraGroups = [
+      "keyan"
+    ];
+  };
+  users.groups.keyan.members = [ "keyan" ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

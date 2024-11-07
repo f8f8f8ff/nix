@@ -34,9 +34,23 @@
         "readdir_attr:appl_finder_info" = "no";
         "readdir_attr:appl_max_access" = "no";
       };
-      "data" = {
+
+      "reed" = {
         "valid users" = "reed";
-        "path" = "/srv/data";
+        "path" = "/srv/smb/reed";
+        "browseable" = "yes";
+        "read only" = "no";
+        "guest ok" = "no";
+        "create mask" = "0660";
+        "directory mask" = "2770";
+        "crossrename:sizelimit" = "5000";
+        "recycle:keeptree" = "yes";
+        "recycle:versions" = "yes";
+      };
+
+      "keyan" = {
+        "valid users" = "keyan";
+        "path" = "/srv/smb/keyan";
         "browseable" = "yes";
         "read only" = "no";
         "guest ok" = "no";
