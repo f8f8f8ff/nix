@@ -7,6 +7,10 @@
   home.packages = with pkgs; [
     d2
     plan9port
+    gopass
+    gopass-jsonapi
+    sops
+    age
   ];
 
   services = {
