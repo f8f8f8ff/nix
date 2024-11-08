@@ -12,6 +12,7 @@
     ./restic.nix
     ./plan9.nix
     ./samba.nix
+    ./git-backup.nix
   ];
 
   sops.secrets."discord/webhook" = {
