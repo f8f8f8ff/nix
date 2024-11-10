@@ -22,7 +22,7 @@
 
         "min protocol" = "SMB2";
         "ea support" = "yes";
-        "vfs objects" = "catia fruit streams_xattr crossrename recycle";
+        "vfs objects" = "crossrename catia fruit streams_xattr";
         "fruit:metadata" = "stream";
         "fruit:model" = "MacSamba";
         "fruit:veto_appledouble" = "no";
@@ -33,6 +33,8 @@
         "readdir_attr:aapl_rsize" = "no";
         "readdir_attr:appl_finder_info" = "no";
         "readdir_attr:appl_max_access" = "no";
+
+        "crossrename:sizelimit" = "102400";
       };
 
       "reed" = {
@@ -43,9 +45,6 @@
         "guest ok" = "no";
         "create mask" = "0660";
         "directory mask" = "2770";
-        "crossrename:sizelimit" = "5000";
-        "recycle:keeptree" = "yes";
-        "recycle:versions" = "yes";
       };
 
       "keyan" = {
@@ -56,9 +55,6 @@
         "guest ok" = "no";
         "create mask" = "0660";
         "directory mask" = "2770";
-        "crossrename:sizelimit" = "5000";
-        "recycle:keeptree" = "yes";
-        "recycle:versions" = "yes";
       };
     };
   };
