@@ -1,4 +1,14 @@
 { config, pkgs, ... }:
+let
+  zfs-autobackup-passport = pkgs.writeShellScriptBin "zfs-autobackup-passport" ''
+    if zpool status passport 1>/dev/null; then
+      exec zfs-autobackup -v --clear-mountpoint --encrypt passport passport/enc
+    else
+      echo "passport not imported" 1>&2
+      exit 1
+    fi
+  '';
+in
 {
   networking.hostId = "1eca4176";
   boot.supportedFilesystems = [ "zfs" ];
@@ -45,5 +55,16 @@
     };
   };
 
-  environment.systemPackages = [ pkgs.sanoid ];
+  environment.systemPackages = [
+    pkgs.sanoid
+    (pkgs.symlinkJoin {
+      name = "nix-autobackup";
+      paths = [
+        zfs-autobackup-passport
+        pkgs.zfs-autobackup
+      ];
+    })
+  ];
+
+
 }
