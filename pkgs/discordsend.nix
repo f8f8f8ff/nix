@@ -1,4 +1,4 @@
-{ fetchFromGitHub , buildGoModule }:
+{ fetchFromGitHub, buildGoModule }:
 
 let
   version = "87dc679";

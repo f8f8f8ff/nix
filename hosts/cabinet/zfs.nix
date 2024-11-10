@@ -16,11 +16,17 @@
 
   fileSystems."/srv/smb/keyan/share" = {
     device = "/tank/ds0/share";
-    options = [ "bind" "x-systemd.after=zfs-mount.service" ];
+    options = [
+      "bind"
+      "x-systemd.after=zfs-mount.service"
+    ];
   };
   fileSystems."/srv/smb/reed/share" = {
     device = "/tank/ds0/share";
-    options = [ "bind" "x-systemd.after=zfs-mount.service" ];
+    options = [
+      "bind"
+      "x-systemd.after=zfs-mount.service"
+    ];
   };
 
   services.sanoid = {

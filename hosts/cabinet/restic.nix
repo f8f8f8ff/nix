@@ -36,6 +36,6 @@
       fi
       journalctl _SYSTEMD_INVOCATION_ID=`systemctl show --value -p InvocationID restic-backups-daily.service` --output cat|\
         ${pkgs.discordsend}/bin/discordsend
-      '';
+    '';
   };
 }

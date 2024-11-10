@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   root = "/srv/smb/reed/software/src";
 in
@@ -6,7 +11,11 @@ in
   systemd.services.git-backup = {
     description = "backup all git repos";
     after = [ "network.target" ];
-    path = [ pkgs.gh pkgs.git config.programs.ssh.package ];
+    path = [
+      pkgs.gh
+      pkgs.git
+      config.programs.ssh.package
+    ];
     unitConfig = {
       RequiresMountsFor = root;
     };

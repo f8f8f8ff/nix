@@ -1,3 +1,3 @@
 final: prev: {
-  discordsend = final.callPackage ../pkgs/discordsend.nix {};
+  discordsend = final.callPackage ../pkgs/discordsend.nix { };
 }
