@@ -12,8 +12,10 @@
     # ./zfs.nix
     # ./restic.nix
     # ./samba.nix
-    ./plan9.nix
+    # ./plan9.nix
   ];
+
+  security.polkit.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -26,7 +28,7 @@
   #   useOSProber = true;
   # };
 
-  boot.kernelParams = [ "usbcore.autosuspend=-1" ];
+  # boot.kernelParams = [ "usbcore.autosuspend=-1" ];
 
   networking.hostName = "t470"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -63,7 +65,9 @@
   services.xserver.xkb = {
     layout = "us";
     variant = "";
+    options = "caps:escape";
   };
+  console.useXkbConfig = true;
 
   sops.defaultSopsFile = ../../secrets/secrets.yaml;
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
@@ -127,23 +131,19 @@
   # Or disable the firewall altogether.
   networking.firewall.enable = false;
 
-  services.plan9 = {
-    enable = true;
-    openFirewall = true;
-  };
-
   # no sleep
-  systemd.sleep.extraConfig = ''
-    AllowSuspend=no
-    AllowHibernation=no
-    AllowHybridSleep=no
-    AllowSuspendThenHibernate=no
-  '';
+  # systemd.sleep.extraConfig = ''
+  #   AllowSuspend=no
+  #   AllowHibernation=no
+  #   AllowHybridSleep=no
+  #   AllowSuspendThenHibernate=no
+  # '';
 
   nix.settings.experimental-features = [
     "flakes"
     "nix-command"
   ];
+  nixpkgs.config.allowUnfree = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -152,5 +152,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.05"; # Did you read the comment?
-
 }
