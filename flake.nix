@@ -118,6 +118,18 @@
               { system.stateVersion = "24.05"; }
             ];
         };
+
+        stall = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            # "${nixpkgs}/nixos/modules/virtualisation/digital-ocean-image.nix"
+            (./. + "/hosts/stall/configuration.nix")
+            {
+              system.configurationRevision = self.rev or self.dirtyRev or null;
+              nixpkgs.overlays = [ (import ./overlays) ];
+            }
+          ];
+        };
       };
     };
 }
