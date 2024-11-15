@@ -7,6 +7,8 @@
   home.packages =
     with pkgs;
     [
+      gnupg
+      gopass
       go-font
       dejavu_fonts
       corefonts
